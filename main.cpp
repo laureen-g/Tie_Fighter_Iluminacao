@@ -244,34 +244,55 @@ int main() {
         // MUDA A COR DA LUZ
         // VERMELHO
         if (glfwGetKey(app.getWindow(), GLFW_KEY_R) == GLFW_PRESS) {
-            /*if (glfwGetKey(app.getWindow(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-                lightColor.r = glm::max(0.0f, lightColor.r - colorStep);
+            if (glfwGetKey(app.getWindow(), GLFW_KEY_MINUS) == GLFW_PRESS) {
+                lightColor.r -= colorStep;
+                if (lightColor.r < 0.0f) {
+                    lightColor.r = 0.0f;
+                }
             } else {
-                lightColor.r = glm::min(1.0f, lightColor.r + colorStep);
-            }*/
-            lightColor = glm::vec3(1.0f, 0.0f, 0.0f);
+                lightColor.r += colorStep;
+                if (lightColor.r > 3.0f) {
+                    lightColor.r = 3.0f;
+                }
+            }
+            // lightColor = glm::vec3(1.0f, 0.0f, 0.0f);
         }
+
 
         // VERDE
         if (glfwGetKey(app.getWindow(), GLFW_KEY_G) == GLFW_PRESS) {
-            /*if (glfwGetKey(app.getWindow(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-                lightColor.g = glm::max(0.0f, lightColor.g - colorStep);
+            if (glfwGetKey(app.getWindow(), GLFW_KEY_MINUS) == GLFW_PRESS) {
+                lightColor.g -= colorStep;
+                if (lightColor.g < 0.0f) {
+                    lightColor.g = 0.0f;
+                }
             } else {
-                lightColor.g = glm::min(1.0f, lightColor.g + colorStep);
-            }*/
-            lightColor = glm::vec3(0.0f, 1.0f, 0.0f);
+                lightColor.g += colorStep;
+                if (lightColor.g > 3.0f) {
+                    lightColor.g = 3.0f;
+                }
+            }
+            // lightColor = glm::vec3(0.0f, 1.0f, 0.0f);
         }
+
 
         // AZUL
         if (glfwGetKey(app.getWindow(), GLFW_KEY_B) == GLFW_PRESS) {
-            /*if (glfwGetKey(app.getWindow(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-                lightColor.b = glm::max(0.0f, lightColor.b - colorStep);
+            if (glfwGetKey(app.getWindow(), GLFW_KEY_MINUS) == GLFW_PRESS) {
+                lightColor.b -= colorStep;
+                if (lightColor.b < 0.0f) {
+                    lightColor.b = 0.0f;
+                }
             } else {
-                lightColor.b = glm::min(1.0f, lightColor.b + colorStep);
-            }*/
-            lightColor = glm::vec3(0.0f, 0.0f, 1.0f);
+                lightColor.b += colorStep;
+                if (lightColor.b > 3.0f) {
+                    lightColor.b = 3.0f;
+                }
+            }
+            // lightColor = glm::vec3(0.0f, 0.0f, 1.0f);
 
         }
+
 
         // RESETA COR
         if (glfwGetKey(app.getWindow(), GLFW_KEY_T) == GLFW_PRESS)
