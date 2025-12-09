@@ -10,7 +10,8 @@ in vec3 Normal;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
 uniform float lightIntensity;
-uniform int lightMode; 
+uniform int lightMode;
+uniform vec3 lightColor;
 
 
 uniform sampler2D texture1;

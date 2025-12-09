@@ -51,6 +51,12 @@ void resetCam() {
 
 }
 
+void resetLight() {
+    lightPos = glm::vec3(1.0f, 1.0f, 1.0f);
+    lightIntensity = 1.0f;
+    lightMode = 0;
+}
+
 void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
     if (firstMouse) { // evitar salto inicial
         lastX = xpos;
@@ -90,7 +96,9 @@ int main() {
 
     // Carrega shaders
     Shader shader("vertex.glsl", "fragment.glsl");
+    Shader shaderLight("light_vert.glsl", "light_frag.glsl");
     shader.use();
+
 
     // Carrega texturas
     Texture tex1("imagens/Tie23.png");
@@ -109,6 +117,11 @@ int main() {
 
     shader.setInt("texture1", 0);
     shader.setInt("texture2", 1);
+
+    // INICIALIZA O OBJ QUE REPRESENTA PONTO DE LUZ
+    Cube lightCube(glm::vec3(0.0f));
+    lightCube.scale = glm::vec3(0.4f);
+    glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
 
     // Inicializa e posiciona objetos em cena
 
@@ -163,6 +176,7 @@ int main() {
     glEnable(GL_DEPTH_TEST);
 
     float cameraSpeed = 0.05f;
+    float lightSpeed = 0.05f;
 
     // Loop principal
 
@@ -189,24 +203,24 @@ int main() {
             resetCam();
         // MUDA A POSIÇÃO Z DA LUZ
         if (glfwGetKey(app.getWindow(), GLFW_KEY_I) == GLFW_PRESS) {
-            lightPos.z -= 0.05f;
+            lightPos.z -= lightSpeed;
         }
         if (glfwGetKey(app.getWindow(), GLFW_KEY_K) == GLFW_PRESS) {
-            lightPos.z += 0.05f;
+            lightPos.z += lightSpeed;
         }
         // MUDA A POSIÇÃO X DA LUZ
         if (glfwGetKey(app.getWindow(), GLFW_KEY_J) == GLFW_PRESS) {
-            lightPos.x -= 0.05f;
+            lightPos.x -= lightSpeed;
         }
         if (glfwGetKey(app.getWindow(), GLFW_KEY_L) == GLFW_PRESS) {
             lightPos.x += 0.05f;
         }
         // MUDA A POSIÇÃO Y DA LUZ
         if (glfwGetKey(app.getWindow(), GLFW_KEY_U) == GLFW_PRESS) {
-            lightPos.y += 0.05f;
+            lightPos.y += lightSpeed;
         }
         if (glfwGetKey(app.getWindow(), GLFW_KEY_O) == GLFW_PRESS) {
-            lightPos.y -= 0.05f;
+            lightPos.y -= lightSpeed;
         }
         // MUDA A INSTENSIDADE DA LUZ
         if (glfwGetKey(app.getWindow(), GLFW_KEY_UP) == GLFW_PRESS) {
@@ -220,6 +234,9 @@ int main() {
             if (lightIntensity < 0.0f) {
                 lightIntensity = 0.0f;
              }
+        }
+        if (glfwGetKey(app.getWindow(), GLFW_KEY_Q) == GLFW_PRESS) {
+            resetLight();
         }
 
         // Limpa tela e depth buffer
@@ -310,6 +327,20 @@ int main() {
         cylinder.draw(shader, model);
         tex9.bind(0);
         hexagon.draw(shader, model);
+
+        shaderLight.use();
+
+        glm::mat4 lightModel = glm::mat4(1.0f);
+        lightModel = glm::translate(lightModel, lightPos); // posição da luz
+        lightModel = glm::scale(lightModel, glm::vec3(0.2f)); // tamanho do cubo/esfera
+
+        shaderLight.setMat4("model", lightModel);
+        shaderLight.setMat4("view", view);
+        shaderLight.setMat4("projection", projection);
+        shaderLight.setVec3("lightColor", lightColor);
+
+        // desenha o cubo da luz
+        lightCube.draw(shaderLight, lightModel);
 
         // desenha a skybox
         skybox.draw(skyboxView, projection);

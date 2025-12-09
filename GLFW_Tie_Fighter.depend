@@ -1429,7 +1429,7 @@
 	"Texture.h"
 	"Plate.h"
 
-1765236851 source:c:\users\germa\downloads\tabalho_3\glfw_tie_fighter\main.cpp
+1765238561 source:c:\users\germa\downloads\tabalho_3\glfw_tie_fighter\main.cpp
 	<GL/glew.h>
 	<GLFW/glfw3.h>
 	<glm/glm.hpp>
@@ -1627,7 +1627,7 @@
 	"Object.h"
 	"Texture.h"
 
-1765155786 source:c:\users\germa\downloads\tabalho_3\glfw_tie_fighter\src\tiewing.cpp
+1765236911 source:c:\users\germa\downloads\tabalho_3\glfw_tie_fighter\src\tiewing.cpp
 	"TieWing.h"
 
 1765148030 source:c:\users\germa\downloads\tabalho_3\glfw_tie_fighter\src\xwing.cpp
