@@ -31,19 +31,19 @@ void main()
     vec3 baseColor = mix(color1, color2, blendFactor);
 
     // --- Ambiente ---
-    vec3 ambient = 0.20 * baseColor;
+    vec3 ambient = 0.20 * baseColor * lightColor;
 
     // --- Difusa ---
     vec3 lightDir = normalize(lightPos - FragPos);
     float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse = diff * baseColor;
+    vec3 diffuse = diff * baseColor * lightColor;
 
     // --- Especular ---
     vec3 viewDir    = normalize(viewPos - FragPos);
     vec3 reflectDir = reflect(-lightDir, norm);
 
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-    vec3 specular = vec3(0.4) * spec;
+    vec3 specular = vec3(0.4) * spec * lightColor;
 
     // resultado final
     vec3 result = ambient + diffuse + specular;

@@ -42,6 +42,8 @@ bool showXWing = false;
 glm::vec3 lightPos(1.0f, 1.0f, 1.0f);
 float lightIntensity = 1.0f;
 int lightMode = 0;
+glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
+float colorStep = 0.05f;
 
 void resetCam() {
 
@@ -201,27 +203,27 @@ int main() {
             cameraPos -= cameraSpeed * cameraUp;
         if (glfwGetKey(app.getWindow(), GLFW_KEY_SPACE) == GLFW_PRESS)
             resetCam();
-        // MUDA A POSIÇÃO Z DA LUZ
+
+        // MUDA A POSIÇÃO DA LUZ
         if (glfwGetKey(app.getWindow(), GLFW_KEY_I) == GLFW_PRESS) {
             lightPos.z -= lightSpeed;
         }
         if (glfwGetKey(app.getWindow(), GLFW_KEY_K) == GLFW_PRESS) {
             lightPos.z += lightSpeed;
         }
-        // MUDA A POSIÇÃO X DA LUZ
         if (glfwGetKey(app.getWindow(), GLFW_KEY_J) == GLFW_PRESS) {
             lightPos.x -= lightSpeed;
         }
         if (glfwGetKey(app.getWindow(), GLFW_KEY_L) == GLFW_PRESS) {
             lightPos.x += 0.05f;
         }
-        // MUDA A POSIÇÃO Y DA LUZ
         if (glfwGetKey(app.getWindow(), GLFW_KEY_U) == GLFW_PRESS) {
             lightPos.y += lightSpeed;
         }
         if (glfwGetKey(app.getWindow(), GLFW_KEY_O) == GLFW_PRESS) {
             lightPos.y -= lightSpeed;
         }
+
         // MUDA A INSTENSIDADE DA LUZ
         if (glfwGetKey(app.getWindow(), GLFW_KEY_UP) == GLFW_PRESS) {
              lightIntensity += 0.001f;
@@ -239,12 +241,50 @@ int main() {
             resetLight();
         }
 
+        // MUDA A COR DA LUZ
+        // VERMELHO
+        if (glfwGetKey(app.getWindow(), GLFW_KEY_R) == GLFW_PRESS) {
+            /*if (glfwGetKey(app.getWindow(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+                lightColor.r = glm::max(0.0f, lightColor.r - colorStep);
+            } else {
+                lightColor.r = glm::min(1.0f, lightColor.r + colorStep);
+            }*/
+            lightColor = glm::vec3(1.0f, 0.0f, 0.0f);
+        }
+
+        // VERDE
+        if (glfwGetKey(app.getWindow(), GLFW_KEY_G) == GLFW_PRESS) {
+            /*if (glfwGetKey(app.getWindow(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+                lightColor.g = glm::max(0.0f, lightColor.g - colorStep);
+            } else {
+                lightColor.g = glm::min(1.0f, lightColor.g + colorStep);
+            }*/
+            lightColor = glm::vec3(0.0f, 1.0f, 0.0f);
+        }
+
+        // AZUL
+        if (glfwGetKey(app.getWindow(), GLFW_KEY_B) == GLFW_PRESS) {
+            /*if (glfwGetKey(app.getWindow(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+                lightColor.b = glm::max(0.0f, lightColor.b - colorStep);
+            } else {
+                lightColor.b = glm::min(1.0f, lightColor.b + colorStep);
+            }*/
+            lightColor = glm::vec3(0.0f, 0.0f, 1.0f);
+
+        }
+
+        // RESETA COR
+        if (glfwGetKey(app.getWindow(), GLFW_KEY_T) == GLFW_PRESS)
+            lightColor = glm::vec3(1.0f);
+
+
         // Limpa tela e depth buffer
         glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         shader.use();
+        shader.setVec3("lightColor", lightColor);
 
         // ILUMINACAO
         shader.setFloat("lightIntensity", lightIntensity);
